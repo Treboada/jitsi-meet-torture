@@ -243,5 +243,10 @@
         <classes>
             <class name="org.jitsi.meet.test.RestTests" />
         </classes>
+    </test>    
+    <test name="FillRoomTest">
+    	<classes>
+    		<class name="org.jitsi.meet.test.FillRoomTest"/>
+    	</classes>
     </test>
 </suite>

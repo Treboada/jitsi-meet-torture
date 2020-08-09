@@ -40,31 +40,41 @@ public class FillRoomTest
 		JitsiMeetUrl meet = super.getJitsiMeetUrl();
 		meet.setRoomName(roomName);
 
-		int participant_counter = 0;
+		int participant_count = 3;
 		
 		try {
-
-			// create participant
-			String name = "CreatedParticipant_" + (++participant_counter);
-			Participant<?> participant = participants.createParticipant(TEST_PROP_BASE);
-			//participant.setDisplayName(name);
 			
-			// join room
-			participant.joinConference(meet);
+			for (int p = 0; p < participant_count; p++)
+			{
+				joinParticipant(meet);
+			}
+			
+			Thread.sleep(60 * 1000);
 			
 			// check limit of participants by room
-			if (checkRoomLimit(participant.getDriver())) return;
+			//if (checkRoomLimit(participant.getDriver())) return;
 
-		} catch (TimeoutException ex) {
+		} catch (TimeoutException | InterruptedException ex) {
 
 			// server not answering on time
-			Assert.fail("Timeout fail after " + participant_counter + " opened sessions.");
+			Assert.fail("Timeout fail after " + 0 + " opened sessions.");
 			
 		} finally {
 			
 			// dispose sessions
 			//participants.getAll().forEach(Participant::close);
 		}
+	}
+	
+	private void joinParticipant(JitsiMeetUrl meet)
+	{
+		// create participant
+		//String name = "CreatedParticipant_" + (++participant_counter);0
+		Participant<?> participant = participants.createParticipant(TEST_PROP_BASE);
+		//participant.setDisplayName(name);
+		
+		// join room
+		participant.joinConference(meet);
 	}
 	
 	private boolean checkRoomLimit(WebDriver driver)
